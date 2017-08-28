@@ -9,7 +9,6 @@
     <string name="sendLocation">Send Location</string>
     <string name="locationTo">Localização Enviada</string>
     <string name="title_activity_settings">Settings</string>
-
     <!--Login Screen-->
     <string name="txt_email">البريد الالكتروني</string>
     <string name="txt_password">كلمة المرور</string>
@@ -21,19 +20,14 @@
     <string name="login_error_msg">أدخل البريد الالكتروني وكلمة المرور</string>
     <string name="login_failed_msg">خطأ في البريد الالكتروني او كلمة المرور</string>
     <string name="login_positive_btn">تم</string>
-
     <string name="passwordCannotBeEmpty">الرجاء إدخال كلمة المرور!</string>
     <string name="invalidemailformat">الرجاء إدخال بريد إلكتروني صحيح!</string>
-
     <string name="logout_title">تسجيل الخروج</string>
     <string name="logout_msg">هل انت متأكد؟</string>
     <string name="logout_positive_btn">موافق</string>
     <string name="logout_negative_btn">إلغاء</string>
-
     <string name="drawer_open">Menu open</string>
     <string name="drawer_close">Menu closed</string>
-
-
     <string name="profileNav">الملف الشخصي</string>
     <string name="balanceNav">حســابي</string>
     <string name="complaintNav">الشكاوي والطلبات</string>
@@ -42,8 +36,8 @@
     <string name="granteeNotifications">إشعارات الجرانتي</string>
     <string name="generalInquery">إستفسار عام</string>
     <string name="signOutNav">تسجيل الخروج</string>
-
     <string name="txt_no_data">لا يوجد بيانات في هذه الصفحة!!</string>
+    <string name="action_search">بحث</string>
 
     <string name="pref_title_ringtone">Ringtone</string>
     <string name="pref_ringtone_silent">Silent</string>
@@ -152,4 +146,5 @@
     <string name="action_settings_headers">Settings with Headers</string>
     <string name="title_activity_profile">الملف الشخصي</string>
     <string name="title_activity_balance">حســابي</string>
+    <string name="title_activity_complaints">الشكاوى والطلبات</string>
 </resources>

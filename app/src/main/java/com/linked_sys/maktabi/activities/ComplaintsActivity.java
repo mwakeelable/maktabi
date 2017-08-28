@@ -3,6 +3,7 @@ package com.linked_sys.maktabi.activities;
 import android.app.SearchManager;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
@@ -16,15 +17,14 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.android.volley.error.VolleyError;
 import com.linked_sys.maktabi.R;
-import com.linked_sys.maktabi.adapters.BalanceAdapter;
+import com.linked_sys.maktabi.adapters.ComplaintsAdapter;
 import com.linked_sys.maktabi.core.AppController;
 import com.linked_sys.maktabi.core.CacheHelper;
-import com.linked_sys.maktabi.models.CaptainBalance;
+import com.linked_sys.maktabi.models.Complaint;
 import com.linked_sys.maktabi.network.ApiCallback;
 import com.linked_sys.maktabi.network.ApiEndPoints;
 import com.linked_sys.maktabi.network.ApiHelper;
@@ -34,11 +34,10 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class BalanceActivity extends BaseActivity implements BalanceAdapter.BalanceAdapterListener, SearchView.OnQueryTextListener {
-    TextView txtTotalBalance;
-    public ArrayList<CaptainBalance> balanceList = new ArrayList<>();
+public class ComplaintsActivity extends BaseActivity implements ComplaintsAdapter.ComplaintsAdapterListener, SearchView.OnQueryTextListener {
+    public ArrayList<Complaint> complaintList = new ArrayList<>();
     private RecyclerView recyclerView;
-    public BalanceAdapter mAdapter;
+    public ComplaintsAdapter mAdapter;
     private SwipeRefreshLayout swipeRefreshLayout;
     int limit = 10;
     int skip = 0;
@@ -52,13 +51,18 @@ public class BalanceActivity extends BaseActivity implements BalanceAdapter.Bala
         super.onCreate(savedInstanceState);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        txtTotalBalance = (TextView) findViewById(R.id.totalBalanceTxt);
-        txtTotalBalance.setText(CacheHelper.getInstance().captainData.get(session.KEY_BALANCE_TOTAL));
         placeholder = (LinearLayout) findViewById(R.id.no_data_placeholder);
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout);
-        mAdapter = new BalanceAdapter(this, balanceList, this);
+        mAdapter = new ComplaintsAdapter(this, complaintList, this);
         mLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -68,7 +72,7 @@ public class BalanceActivity extends BaseActivity implements BalanceAdapter.Bala
                 new Runnable() {
                     @Override
                     public void run() {
-                        getBalance();
+                        getComplaints();
                     }
                 }
         );
@@ -77,7 +81,7 @@ public class BalanceActivity extends BaseActivity implements BalanceAdapter.Bala
             public void onRefresh() {
                 limit = 10;
                 skip = 0;
-                getBalance();
+                getComplaints();
             }
         });
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -99,7 +103,7 @@ public class BalanceActivity extends BaseActivity implements BalanceAdapter.Bala
                             Log.v("...", "Last Item Wow !");
                             //Do pagination.. i.e. fetch new data
                             skip = skip + limit;
-                            loadMoreBalance();
+                            loadMoreComplaints();
 
                         }
                     }
@@ -125,40 +129,39 @@ public class BalanceActivity extends BaseActivity implements BalanceAdapter.Bala
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                BalanceActivity.this.finish();
+                ComplaintsActivity.this.finish();
                 hideSoftKeyboard(this);
                 return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
-    private void getBalance() {
-        String balanceUrl = ApiEndPoints.GET_CAPTAIN_BALANCE
-                + "?CaptainID=" + CacheHelper.getInstance().captainData.get(session.KEY_CAPTAIN_ID)
+    private void getComplaints() {
+        String balanceUrl = ApiEndPoints.GET_CAPTAIN_COMPLAINTS
+                + "?UserID=" + CacheHelper.getInstance().userData.get(session.KEY_USER_ID)
                 + "&Skip=" + skip
                 + "&length=" + limit;
         ApiHelper api = new ApiHelper(this, balanceUrl, Request.Method.GET, new ApiCallback() {
             @Override
             public void onSuccess(Object response) {
-                balanceList.clear();
+                complaintList.clear();
                 JSONObject obj = (JSONObject) response;
                 try {
-                    JSONArray balanceArray = obj.optJSONArray("BalancesList");
-                    if (balanceArray.length() > 0) {
+                    JSONArray compArray = obj.optJSONArray("ComplainsList");
+                    if (compArray.length() > 0) {
                         placeholder.setVisibility(View.GONE);
-                        for (int i = 0; i < balanceArray.length(); i++) {
-                            JSONObject balanceObj = balanceArray.optJSONObject(i);
-                            CaptainBalance captainBalance = new CaptainBalance();
-                            captainBalance.setBalanceID(balanceObj.optInt("ID"));
-                            captainBalance.setCaptainID(balanceObj.optInt("CaptainID"));
-                            captainBalance.setAmount(balanceObj.optInt("Amount"));
-                            captainBalance.setNotes(balanceObj.getString("Notes"));
-                            captainBalance.setCreatedDate(balanceObj.optString("CreatedDate"));
-                            balanceList.add(captainBalance);
+                        for (int i = 0; i < compArray.length(); i++) {
+                            JSONObject balanceObj = compArray.optJSONObject(i);
+                            Complaint complaint = new Complaint();
+                            complaint.setCompID(balanceObj.optInt("ID"));
+                            complaint.setCompTitle(balanceObj.optString("Title"));
+                            complaint.setCompDate(balanceObj.optString("PostDate"));
+                            complaint.setSolved(balanceObj.optBoolean("Solved"));
+                            complaintList.add(complaint);
                         }
                         recyclerView.setAdapter(mAdapter);
                         swipeRefreshLayout.setRefreshing(false);
-                        if (balanceArray.length() < 10)
+                        if (compArray.length() < 10)
                             loadMore = false;
                         else
                             loadMore = true;
@@ -179,7 +182,7 @@ public class BalanceActivity extends BaseActivity implements BalanceAdapter.Bala
         api.executeRequest(true, false);
     }
 
-    private void loadMoreBalance() {
+    private void loadMoreComplaints() {
         String balanceUrl = ApiEndPoints.GET_CAPTAIN_BALANCE
                 + "?CaptainID=" + CacheHelper.getInstance().captainData.get(session.KEY_CAPTAIN_ID)
                 + "&Skip=" + skip
@@ -187,25 +190,24 @@ public class BalanceActivity extends BaseActivity implements BalanceAdapter.Bala
         ApiHelper api = new ApiHelper(this, balanceUrl, Request.Method.GET, new ApiCallback() {
             @Override
             public void onSuccess(Object response) {
-                balanceList.clear();
+                complaintList.clear();
                 JSONObject obj = (JSONObject) response;
                 try {
-                    JSONArray balanceArray = obj.optJSONArray("BalancesList");
-                    if (balanceArray.length() > 0) {
+                    JSONArray compArray = obj.optJSONArray("ComplainsList");
+                    if (compArray.length() > 0) {
                         placeholder.setVisibility(View.GONE);
-                        for (int i = 0; i < balanceArray.length(); i++) {
-                            JSONObject balanceObj = balanceArray.optJSONObject(i);
-                            CaptainBalance captainBalance = new CaptainBalance();
-                            captainBalance.setBalanceID(balanceObj.optInt("ID"));
-                            captainBalance.setCaptainID(balanceObj.optInt("CaptainID"));
-                            captainBalance.setAmount(balanceObj.optInt("Amount"));
-                            captainBalance.setNotes(balanceObj.getString("Notes"));
-                            captainBalance.setCreatedDate(balanceObj.optString("CreatedDate"));
-                            balanceList.add(captainBalance);
+                        for (int i = 0; i < compArray.length(); i++) {
+                            JSONObject balanceObj = compArray.optJSONObject(i);
+                            Complaint complaint = new Complaint();
+                            complaint.setCompID(balanceObj.optInt("ID"));
+                            complaint.setCompTitle(balanceObj.optString("Title"));
+                            complaint.setCompDate(balanceObj.optString("PostDate"));
+                            complaint.setSolved(balanceObj.optBoolean("Solved"));
+                            complaintList.add(complaint);
                         }
                         mAdapter.notifyDataSetChanged();
                         swipeRefreshLayout.setRefreshing(false);
-                        if (balanceArray.length() < 10)
+                        if (compArray.length() < 10)
                             loadMore = false;
                         else
                             loadMore = true;
@@ -228,7 +230,7 @@ public class BalanceActivity extends BaseActivity implements BalanceAdapter.Bala
 
     @Override
     protected int getLayoutID() {
-        return R.layout.activity_balance;
+        return R.layout.activity_complaints;
     }
 
     @Override
@@ -243,7 +245,7 @@ public class BalanceActivity extends BaseActivity implements BalanceAdapter.Bala
     }
 
     @Override
-    public void onBalanceRowClicked(int position) {
+    public void onCompRowClicked(int position) {
 
     }
 

@@ -1,59 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/balanceRow"
+    android:id="@+id/compRow"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:clickable="true"
     android:focusable="true">
 
     <LinearLayout
-        android:id="@+id/balanceContainer"
+        android:id="@+id/compTitleContainer"
         android:layout_width="match_parent"
-        android:layout_height="45dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
         android:gravity="start|center"
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/balanceLabelTxt"
+            android:id="@+id/compTitleLabelTxt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginStart="10dp"
-            android:text="الحسـاب:"
+            android:text="عنوان الشـكوى:"
             android:textColor="#B9B9B9"
             android:textSize="18sp" />
 
         <TextView
-            android:id="@+id/balanceTxt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:layout_marginStart="5dp"
-            android:textColor="#6A6A6A"
-            android:textSize="18sp" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/notesContainer"
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:layout_below="@id/balanceContainer"
-        android:gravity="start|center"
-        android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/notesLabelTxt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginStart="10dp"
-            android:text="ملاحظات:"
-            android:textColor="#B9B9B9"
-            android:textSize="18sp" />
-
-        <TextView
-            android:id="@+id/notesTxt"
+            android:id="@+id/compTitleTxt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
@@ -66,15 +38,16 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/dateContainer"
+        android:id="@+id/compDateContainer"
         android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:layout_below="@id/notesContainer"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/compTitleContainer"
+        android:layout_marginTop="5dp"
         android:gravity="start|center"
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/dateLabelTxt"
+            android:id="@+id/compDateLabelTxt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
@@ -84,7 +57,7 @@
             android:textSize="18sp" />
 
         <TextView
-            android:id="@+id/balanceDateTxt"
+            android:id="@+id/compDateTxt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"

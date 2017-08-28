@@ -121,6 +121,7 @@ public class MainActivity extends BaseActivity {
                             @Override
                             public void onClick(DrawerItem drawerItem, long l, int i) {
                                 mDrawerLayout.closeDrawer(GravityCompat.START);
+                                openActivity(ComplaintsActivity.class);
                             }
                         })
         );
