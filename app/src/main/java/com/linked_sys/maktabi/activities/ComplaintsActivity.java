@@ -2,6 +2,7 @@ package com.linked_sys.maktabi.activities;
 
 import android.app.SearchManager;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -151,12 +152,13 @@ public class ComplaintsActivity extends BaseActivity implements ComplaintsAdapte
                     if (compArray.length() > 0) {
                         placeholder.setVisibility(View.GONE);
                         for (int i = 0; i < compArray.length(); i++) {
-                            JSONObject balanceObj = compArray.optJSONObject(i);
+                            JSONObject compObj = compArray.optJSONObject(i);
                             Complaint complaint = new Complaint();
-                            complaint.setCompID(balanceObj.optInt("ID"));
-                            complaint.setCompTitle(balanceObj.optString("Title"));
-                            complaint.setCompDate(balanceObj.optString("PostDate"));
-                            complaint.setSolved(balanceObj.optBoolean("Solved"));
+                            complaint.setCompID(compObj.optInt("ID"));
+                            complaint.setCompTitle(compObj.optString("Title"));
+                            complaint.setCompDate(compObj.optString("PostDate"));
+                            complaint.setSolved(compObj.optBoolean("Solved"));
+                            complaint.setStatusID(compObj.optInt("StatusID"));
                             complaintList.add(complaint);
                         }
                         recyclerView.setAdapter(mAdapter);
@@ -197,12 +199,13 @@ public class ComplaintsActivity extends BaseActivity implements ComplaintsAdapte
                     if (compArray.length() > 0) {
                         placeholder.setVisibility(View.GONE);
                         for (int i = 0; i < compArray.length(); i++) {
-                            JSONObject balanceObj = compArray.optJSONObject(i);
+                            JSONObject compObj = compArray.optJSONObject(i);
                             Complaint complaint = new Complaint();
-                            complaint.setCompID(balanceObj.optInt("ID"));
-                            complaint.setCompTitle(balanceObj.optString("Title"));
-                            complaint.setCompDate(balanceObj.optString("PostDate"));
-                            complaint.setSolved(balanceObj.optBoolean("Solved"));
+                            complaint.setCompID(compObj.optInt("ID"));
+                            complaint.setCompTitle(compObj.optString("Title"));
+                            complaint.setCompDate(compObj.optString("PostDate"));
+                            complaint.setSolved(compObj.optBoolean("Solved"));
+                            complaint.setStatusID(compObj.optInt("StatusID"));
                             complaintList.add(complaint);
                         }
                         mAdapter.notifyDataSetChanged();
@@ -246,7 +249,10 @@ public class ComplaintsActivity extends BaseActivity implements ComplaintsAdapte
 
     @Override
     public void onCompRowClicked(int position) {
-
+        Intent intent = new Intent(this, CompDetailsActivity.class);
+        intent.putExtra("ID", mAdapter.filteredList.get(position).getCompID());
+        intent.putExtra("statusID", mAdapter.filteredList.get(position).getStatusID());
+        startActivity(intent);
     }
 
     @Override

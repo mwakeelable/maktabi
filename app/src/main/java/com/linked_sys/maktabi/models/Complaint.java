@@ -7,6 +7,7 @@ public class Complaint {
     private String compBody;
     private String compDate;
     private boolean isSolved;
+    private int statusID;
 
     public Complaint() {
     }
@@ -49,5 +50,13 @@ public class Complaint {
 
     public void setSolved(boolean solved) {
         isSolved = solved;
+    }
+
+    public int getStatusID() {
+        return statusID;
+    }
+
+    public void setStatusID(int statusID) {
+        this.statusID = statusID;
     }
 }

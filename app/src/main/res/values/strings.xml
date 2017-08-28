@@ -147,4 +147,5 @@
     <string name="title_activity_profile">الملف الشخصي</string>
     <string name="title_activity_balance">حســابي</string>
     <string name="title_activity_complaints">الشكاوى والطلبات</string>
+    <string name="title_activity_comp_details">تفاصيل الشكوى</string>
 </resources>
