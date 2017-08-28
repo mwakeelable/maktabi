@@ -3,16 +3,19 @@ package com.linked_sys.maktabi.activities;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
+import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.android.volley.Request;
 import com.android.volley.error.VolleyError;
-import com.linked_sys.maktabi.core.AppController;
 import com.linked_sys.maktabi.core.CacheHelper;
 import com.linked_sys.maktabi.core.SessionManager;
 import com.linked_sys.maktabi.core.SharedManager;
@@ -34,6 +37,9 @@ public abstract class BaseActivity extends AppCompatActivity {
         session = new SessionManager(this);
         sharedManager = new SharedManager();
         sharedManager.setLanguage(this, "ar");
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            this.getWindow().getDecorView().setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
+        }
     }
 
     protected abstract int getLayoutID();
@@ -72,9 +78,7 @@ public abstract class BaseActivity extends AppCompatActivity {
                 try {
                     JSONObject userDataObj = res.optJSONObject("UserData");
                     JSONObject captainDataObj = res.optJSONObject("CaptainData");
-
                     session.setUserType(userDataObj.optString("UserType"));
-
                     CacheHelper.getInstance().userData.put(session.KEY_USER_ID, String.valueOf(userDataObj.optInt("Id")));
                     CacheHelper.getInstance().userData.put(session.KEY_NAME1, userDataObj.optString("Name1"));
                     CacheHelper.getInstance().userData.put(session.KEY_NAME2, userDataObj.optString("Name2"));
@@ -83,7 +87,6 @@ public abstract class BaseActivity extends AppCompatActivity {
                     CacheHelper.getInstance().userData.put(session.KEY_IMAGE, userDataObj.optString("Image"));
                     CacheHelper.getInstance().userData.put(session.KEY_USER_TYPE, userDataObj.optString("UserType"));
                     CacheHelper.getInstance().userData.put(session.KEY_OFFICE_ID, userDataObj.optString("OfficeID"));
-
                     CacheHelper.getInstance().captainData.put(session.KEY_CAPTAIN_ID, String.valueOf(captainDataObj.optInt("ID")));
                     CacheHelper.getInstance().captainData.put(session.KEY_NAME, captainDataObj.optString("Name"));
                     CacheHelper.getInstance().captainData.put(session.KEY_UBER_NAME, captainDataObj.optString("UberName"));
@@ -94,17 +97,29 @@ public abstract class BaseActivity extends AppCompatActivity {
                     CacheHelper.getInstance().captainData.put(session.KEY_CARD_NO, captainDataObj.optString("CardNo"));
                     CacheHelper.getInstance().captainData.put(session.KEY_CAREEM_ID, String.valueOf(captainDataObj.optInt("CareemID")));
                     CacheHelper.getInstance().captainData.put(session.KEY_BALANCE_TOTAL, String.valueOf(res.opt("TotalBalance")));
-
+                    CacheHelper.getInstance().captainData.put(session.KEY_IMAGE, captainDataObj.optString("Image"));
+                    CacheHelper.getInstance().captainData.put("isCareem", String.valueOf(captainDataObj.optBoolean("Careem")));
+                    CacheHelper.getInstance().captainData.put("isUber",String.valueOf(captainDataObj.optBoolean("Uber")));
                     openActivity(MainActivity.class);
                     finish();
                 } catch (Exception e) {
-                    Log.d(AppController.TAG, e.getMessage().toString());
+
                 }
             }
 
             @Override
             public void onFailure(VolleyError error) {
-                Log.d(AppController.TAG, "Error");
+                new MaterialDialog.Builder(BaseActivity.this)
+                        .content("الرجاء تسجيل الدخول مرة اخرى!")
+                        .positiveText("موافق")
+                        .onPositive(new MaterialDialog.SingleButtonCallback() {
+                            @Override
+                            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                session.logoutUser();
+                            }
+                        })
+                        .cancelable(false)
+                        .show();
             }
         });
         api.executeRequest(false, false);

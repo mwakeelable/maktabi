@@ -6,7 +6,7 @@ import android.preference.PreferenceManager;
 
 public class SharedManager {
     private static final String PREF_LANGUAGE = "pref_language";
-    private final static String DEFAULT_LANGUAGE = "en";
+    private final static String DEFAULT_LANGUAGE = "ar";
 
     public String getLanguage(Context context) {
         SharedPreferences prefs = PreferenceManager

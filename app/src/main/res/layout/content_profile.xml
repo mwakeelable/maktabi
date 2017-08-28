@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FFF"
     android:orientation="vertical"
-    android:background="#F5F5F5"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".activities.ProfileActivity"
     tools:showIn="@layout/activity_profile">
@@ -13,167 +13,399 @@
     <ScrollView
         android:id="@+id/profile_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fillViewport="true"
-        android:scrollbars="none">
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <LinearLayout
+            <!--header-->
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="130dp"
-                android:background="@color/colorPrimaryLight"
-                android:gravity="center"
+                android:layout_height="180dp"
+                android:background="#FFF"
                 android:orientation="vertical">
 
-                <ImageView
-                    android:id="@+id/profile_image"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:src="@drawable/avatar_placeholder" />
+                <com.linked_sys.maktabi.utils.SelectableRoundedImageView
+                android:id="@+id/profile_image"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_alignParentTop="true"
+                android:layout_centerInParent="true"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:scaleType="centerCrop"
+                app:sriv_border_color="@color/colorPrimary"
+                app:sriv_border_width="2dip"
+                app:sriv_left_bottom_corner_radius="20dip"
+                app:sriv_left_top_corner_radius="20dip"
+                app:sriv_oval="true"
+                app:sriv_right_bottom_corner_radius="20dip"
+                app:sriv_right_top_corner_radius="20dip" />
 
-            </LinearLayout>
 
+                <LinearLayout
+                    android:id="@+id/headerLabel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/profile_image"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginRight="8dp"
+                        android:layout_weight="1"
+                        android:background="#d8d8d8" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="البيانات الاسـاسية"
+                        android:textSize="12sp" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_weight="1"
+                        android:background="#d8d8d8" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/fullNameContainer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_below="@id/headerLabel"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
+                    android:gravity="start|center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/fullNameLabelTxt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginStart="10dp"
+                        android:text="الاســم:"
+                        android:textColor="#B9B9B9"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:id="@+id/fullNameTxt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginStart="5dp"
+                        android:textColor="#6A6A6A"
+                        android:textSize="18sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/nIDContainer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/fullNameContainer"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_weight="1"
+                    android:gravity="start|center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/nIDLabelTxt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginStart="10dp"
+                        android:text="الرقم القومي:"
+                        android:textColor="#B9B9B9"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:id="@+id/nIDTxt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginStart="5dp"
+                        android:textColor="#6A6A6A"
+                        android:textSize="18sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/cardNoContainer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="45dp"
+                    android:layout_below="@id/nIDContainer"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_weight="1"
+                    android:gravity="start|center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/cardNoLabelTxt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginStart="10dp"
+                        android:text="رقم كارت القبض:"
+                        android:textColor="#B9B9B9"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:id="@+id/cardNoTxt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginStart="5dp"
+                        android:textColor="#6A6A6A"
+                        android:textSize="18sp" />
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+            <!--uberContainer-->
             <LinearLayout
+                android:id="@+id/uberDataContainer"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="#FFFFFF"
                 android:orientation="vertical">
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginRight="8dp"
+                        android:layout_weight="1"
+                        android:background="#d8d8d8" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="بيانات اوبر"
+                        android:textSize="12sp" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_weight="1"
+                        android:background="#d8d8d8" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/uberNameContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_marginTop="5dp"
+                    android:gravity="start|center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/uberNameLabelTxt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginStart="10dp"
+                        android:text="الاســم - اوبر:"
+                        android:textColor="#B9B9B9"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:id="@+id/uberNameTxt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginStart="5dp"
+                        android:textColor="#6A6A6A"
+                        android:textSize="18sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/uberMobileContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_marginTop="5dp"
+                    android:gravity="start|center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/uberMobileLabelTxt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginStart="10dp"
+                        android:text="رقم الموبايل - اوبر:"
+                        android:textColor="#B9B9B9"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:id="@+id/uberMobileTxt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginStart="5dp"
+                        android:textColor="#6A6A6A"
+                        android:textSize="18sp" />
+
+                </LinearLayout>
 
 
-                    <LinearLayout
-                        android:id="@+id/fullNameContainer"
-                        android:layout_width="match_parent"
-                        android:layout_height="45dp"
-                        android:background="@drawable/white_button"
-                        android:gravity="start|center"
-                        android:orientation="horizontal">
+            </LinearLayout>
 
-                        <TextView
-                            android:id="@+id/fullNameLabelTxt"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="10dp"
-                            android:textColor="#B9B9B9"
-                            android:textSize="18sp"
-                            android:layout_marginLeft="10dp" />
+            <!--careemContainer-->
+            <LinearLayout
+                android:id="@+id/careemDataContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="#FFFFFF"
+                android:orientation="vertical">
 
-                        <TextView
-                            android:id="@+id/fullNameTxt"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="5dp"
-                            android:textColor="#6A6A6A"
-                            android:textSize="18sp"
-                            android:layout_marginLeft="5dp" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal">
 
-                    </LinearLayout>
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginRight="8dp"
+                        android:layout_weight="1"
+                        android:background="#d8d8d8" />
 
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="بيانات كريـم"
+                        android:textSize="12sp" />
 
-                    <LinearLayout
-                        android:id="@+id/emailContainer"
-                        android:layout_width="match_parent"
-                        android:layout_height="45dp"
-                        android:layout_marginTop="5dp"
-                        android:background="@drawable/white_button"
-                        android:gravity="start|center"
-                        android:orientation="horizontal">
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_weight="1"
+                        android:background="#d8d8d8" />
 
-                        <TextView
-                            android:id="@+id/emailLabelTxt"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="10dp"
-                            android:textColor="#B9B9B9"
-                            android:textSize="18sp"
-                            android:layout_marginLeft="10dp" />
+                </LinearLayout>
 
-                        <TextView
-                            android:id="@+id/emailTxt"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="5dp"
-                            android:textColor="#6A6A6A"
-                            android:textSize="18sp"
-                            android:layout_marginLeft="5dp" />
+                <LinearLayout
+                    android:id="@+id/careemNameContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_marginTop="5dp"
+                    android:gravity="start|center"
+                    android:orientation="horizontal">
 
-                    </LinearLayout>
+                    <TextView
+                        android:id="@+id/careemNameLabelTxt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginStart="10dp"
+                        android:text="الاسـم - كريم:"
+                        android:textColor="#B9B9B9"
+                        android:textSize="18sp" />
 
-                    <LinearLayout
-                        android:id="@+id/mobileContainer"
-                        android:layout_width="match_parent"
-                        android:layout_height="45dp"
-                        android:layout_marginTop="5dp"
-                        android:background="@drawable/white_button"
-                        android:gravity="start|center"
-                        android:orientation="horizontal">
+                    <TextView
+                        android:id="@+id/careemNameTxt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginStart="5dp"
+                        android:textColor="#6A6A6A"
+                        android:textSize="18sp" />
 
-                        <TextView
-                            android:id="@+id/mobileLabelTxt"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="10dp"
-                            android:textColor="#B9B9B9"
-                            android:textSize="18sp"
-                            android:layout_marginLeft="10dp" />
+                </LinearLayout>
 
-                        <TextView
-                            android:id="@+id/mobileTxt"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="5dp"
-                            android:textColor="#6A6A6A"
-                            android:textSize="18sp"
-                            android:layout_marginLeft="5dp" />
+                <LinearLayout
+                    android:id="@+id/careemMobileContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_marginTop="5dp"
+                    android:gravity="start|center"
+                    android:orientation="horizontal">
 
-                    </LinearLayout>
+                    <TextView
+                        android:id="@+id/careemMobileLabelTxt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginStart="10dp"
+                        android:text="رقم الموبايل - كريم:"
+                        android:textColor="#B9B9B9"
+                        android:textSize="18sp" />
 
+                    <TextView
+                        android:id="@+id/careemMobileTxt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginStart="5dp"
+                        android:textColor="#6A6A6A"
+                        android:textSize="18sp" />
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="45dp"
-                        android:layout_marginTop="5dp"
-                        android:weightSum="2">
+                </LinearLayout>
 
-                        <LinearLayout
-                            android:id="@+id/langContainer"
-                            android:layout_width="match_parent"
-                            android:layout_height="45dp"
-                            android:layout_marginEnd="5dp"
-                            android:layout_marginTop="5dp"
-                            android:layout_weight="1"
-                            android:background="@drawable/white_button"
-                            android:gravity="start|center"
-                            android:orientation="horizontal"
-                            android:layout_marginRight="5dp">
+                <LinearLayout
+                    android:id="@+id/careemIDContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_marginTop="5dp"
+                    android:gravity="start|center"
+                    android:orientation="horizontal">
 
-                            <TextView
-                                android:id="@+id/langLabelTxt"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="10dp"
-                                android:textColor="#B9B9B9"
-                                android:textSize="18sp"
-                                android:layout_marginLeft="10dp" />
+                    <TextView
+                        android:id="@+id/careemIDLabelTxt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginStart="10dp"
+                        android:text=":Careem ID"
+                        android:textColor="#B9B9B9"
+                        android:textSize="18sp" />
 
-                            <TextView
-                                android:id="@+id/langTxt"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="5dp"
-                                android:textColor="#6A6A6A"
-                                android:textSize="18sp"
-                                android:layout_marginLeft="5dp" />
-
-                        </LinearLayout>
-
-                    </LinearLayout>
+                    <TextView
+                        android:id="@+id/careemIDTxt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginStart="5dp"
+                        android:textColor="#6A6A6A"
+                        android:textSize="18sp" />
 
                 </LinearLayout>
 
@@ -182,6 +414,5 @@
         </LinearLayout>
 
     </ScrollView>
-
 
 </LinearLayout>

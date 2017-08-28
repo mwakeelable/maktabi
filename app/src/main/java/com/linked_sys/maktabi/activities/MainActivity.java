@@ -87,6 +87,11 @@ public class MainActivity extends BaseActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    protected int getLayoutID() {
+        return R.layout.main_activity;
+    }
+
     private void drawCaptainMenu() {
         drawer.addItem(new DrawerItem()
                 .setTextPrimary(getString(R.string.profileNav))
@@ -170,7 +175,7 @@ public class MainActivity extends BaseActivity {
                 })
         );
 
-        if (CacheHelper.getInstance().userData.get(session.KEY_IMAGE).equals("null")) {
+        if (CacheHelper.getInstance().captainData.get(session.KEY_IMAGE).equals("null")) {
             drawer.addProfile(new DrawerProfile()
                     .setId(Long.parseLong(CacheHelper.getInstance().userData.get(session.KEY_USER_ID)))
                     .setBackground(ContextCompat.getDrawable(MainActivity.this, R.color.colorPrimary))
@@ -180,7 +185,7 @@ public class MainActivity extends BaseActivity {
         } else {
             Glide
                     .with(this)
-                    .load(ApiEndPoints.BASE_URL + CacheHelper.getInstance().userData.get(session.KEY_IMAGE) + "?width=320")
+                    .load(ApiEndPoints.BASE_URL + CacheHelper.getInstance().captainData.get(session.KEY_IMAGE))
                     .asBitmap()
                     .transform(new CircleTransform(this))
                     .into(new SimpleTarget<Bitmap>(100, 100) {
@@ -190,7 +195,7 @@ public class MainActivity extends BaseActivity {
                             drawer.addProfile(new DrawerProfile()
                                     .setId(Long.parseLong(CacheHelper.getInstance().userData.get(session.KEY_USER_ID)))
                                     .setBackground(ContextCompat.getDrawable(MainActivity.this, R.color.colorPrimary))
-                                    .setName(CacheHelper.getInstance().userData.get(session.KEY_NAME))
+                                    .setName(CacheHelper.getInstance().captainData.get(session.KEY_NAME))
                                     .setAvatar(ContextCompat.getDrawable(MainActivity.this, R.drawable.avatar_placeholder))
                             );
                         }
@@ -201,7 +206,7 @@ public class MainActivity extends BaseActivity {
                             drawer.addProfile(new DrawerProfile()
                                     .setId(Long.parseLong(CacheHelper.getInstance().userData.get(session.KEY_USER_ID)))
                                     .setBackground(ContextCompat.getDrawable(MainActivity.this, R.color.colorPrimary))
-                                    .setName(CacheHelper.getInstance().userData.get(session.KEY_NAME))
+                                    .setName(CacheHelper.getInstance().captainData.get(session.KEY_NAME))
                                     .setAvatar(new BitmapDrawable(getResources(), userAvatar))
                             );
                         }
@@ -212,7 +217,7 @@ public class MainActivity extends BaseActivity {
                             drawer.addProfile(new DrawerProfile()
                                     .setId(Long.parseLong(CacheHelper.getInstance().userData.get(session.KEY_USER_ID)))
                                     .setBackground(ContextCompat.getDrawable(MainActivity.this, R.color.colorPrimary))
-                                    .setName(CacheHelper.getInstance().userData.get(session.KEY_NAME))
+                                    .setName(CacheHelper.getInstance().captainData.get(session.KEY_NAME))
                                     .setAvatar(ContextCompat.getDrawable(MainActivity.this, R.drawable.avatar_placeholder))
                             );
                         }
@@ -233,11 +238,6 @@ public class MainActivity extends BaseActivity {
                     }
                 })
                 .show();
-    }
-
-    @Override
-    protected int getLayoutID() {
-        return R.layout.main_activity;
     }
 
     private void drawMainFragment() {

@@ -13,7 +13,10 @@ import android.widget.TextView;
 import com.linked_sys.maktabi.R;
 import com.linked_sys.maktabi.models.CaptainBalance;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class BalanceAdapter extends RecyclerView.Adapter<BalanceAdapter.MyViewHolder> implements Filterable {
     private Context mContext;
@@ -35,7 +38,7 @@ public class BalanceAdapter extends RecyclerView.Adapter<BalanceAdapter.MyViewHo
         }
     }
 
-     public BalanceAdapter(Context mContext, ArrayList<CaptainBalance> captainBalanceList, BalanceAdapterListener listener) {
+    public BalanceAdapter(Context mContext, ArrayList<CaptainBalance> captainBalanceList, BalanceAdapterListener listener) {
         this.mContext = mContext;
         this.balanceList = captainBalanceList;
         this.filteredList = captainBalanceList;
@@ -70,8 +73,16 @@ public class BalanceAdapter extends RecyclerView.Adapter<BalanceAdapter.MyViewHo
         CaptainBalance captainBalance = filteredList.get(position);
         holder.balanceTxt.setText(String.valueOf(captainBalance.getAmount()));
         holder.notesTxt.setText(captainBalance.getNotes());
-        String date = getDateFormat(captainBalance.getCreatedDate());
-        holder.dateTxt.setText(date);
+        SimpleDateFormat spf = new SimpleDateFormat("yyyy-MM-dd");
+        Date newDate = null;
+        try {
+            newDate = spf.parse(captainBalance.getCreatedDate());
+            spf = new SimpleDateFormat("dd/MM/yyyy");
+            String date = spf.format(newDate);
+            holder.dateTxt.setText(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         applyClickEvents(holder, position);
     }
 
@@ -80,7 +91,7 @@ public class BalanceAdapter extends RecyclerView.Adapter<BalanceAdapter.MyViewHo
         return Long.parseLong(String.valueOf(filteredList.get(position).getBalanceID()));
     }
 
-       @Override
+    @Override
     public int getItemCount() {
         return filteredList.size();
     }
@@ -107,7 +118,7 @@ public class BalanceAdapter extends RecyclerView.Adapter<BalanceAdapter.MyViewHo
                 // search content in tasks list
                 for (CaptainBalance captainBalance : balanceList) {
                     if (captainBalance.getNotes().toLowerCase().contains(constraint.toString().toLowerCase())) {
-                             tempList.add(captainBalance);
+                        tempList.add(captainBalance);
                     }
                 }
                 filterResults.count = tempList.size();
@@ -141,4 +152,4 @@ public class BalanceAdapter extends RecyclerView.Adapter<BalanceAdapter.MyViewHo
         return balanceFilter;
     }
 
-    }
+}
