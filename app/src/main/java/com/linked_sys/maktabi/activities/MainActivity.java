@@ -13,23 +13,33 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.android.volley.Request;
+import com.android.volley.error.VolleyError;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.heinrichreimersoftware.materialdrawer.DrawerView;
 import com.heinrichreimersoftware.materialdrawer.structure.DrawerItem;
 import com.heinrichreimersoftware.materialdrawer.structure.DrawerProfile;
 import com.linked_sys.maktabi.R;
 import com.linked_sys.maktabi.adapters.CircleTransform;
+import com.linked_sys.maktabi.core.AppController;
 import com.linked_sys.maktabi.core.CacheHelper;
 import com.linked_sys.maktabi.fragments.MainFragment;
+import com.linked_sys.maktabi.network.ApiCallback;
 import com.linked_sys.maktabi.network.ApiEndPoints;
+import com.linked_sys.maktabi.network.ApiHelper;
+
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class MainActivity extends BaseActivity {
     DrawerLayout mDrawerLayout;
@@ -116,14 +126,14 @@ public class MainActivity extends BaseActivity {
         drawer.addDivider();
 
         drawer.addItem(new DrawerItem()
-                        .setTextPrimary(getString(R.string.complaintNav))
-                        .setOnItemClickListener(new DrawerItem.OnItemClickListener() {
-                            @Override
-                            public void onClick(DrawerItem drawerItem, long l, int i) {
-                                mDrawerLayout.closeDrawer(GravityCompat.START);
-                                openActivity(ComplaintsActivity.class);
-                            }
-                        })
+                .setTextPrimary(getString(R.string.complaintNav))
+                .setOnItemClickListener(new DrawerItem.OnItemClickListener() {
+                    @Override
+                    public void onClick(DrawerItem drawerItem, long l, int i) {
+                        mDrawerLayout.closeDrawer(GravityCompat.START);
+                        openActivity(ComplaintsActivity.class);
+                    }
+                })
         );
         drawer.addDivider();
 
@@ -226,6 +236,24 @@ public class MainActivity extends BaseActivity {
         }
     }
 
+    private void removeFBToken() {
+        Map<String, String> map = new LinkedHashMap<>();
+        map.put("UserID", CacheHelper.getInstance().userData.get(session.KEY_USER_ID));
+        map.put("Token", FirebaseInstanceId.getInstance().getToken());
+        ApiHelper api = new ApiHelper(this, ApiEndPoints.REMOVE_FB_TOKEN, Request.Method.POST, map, new ApiCallback() {
+            @Override
+            public void onSuccess(Object response) {
+                session.logoutUser();
+            }
+
+            @Override
+            public void onFailure(VolleyError error) {
+                Log.d(AppController.TAG, error.getMessage());
+            }
+        });
+        api.executePostRequest(true);
+    }
+
     private void logout() {
         new MaterialDialog.Builder(MainActivity.this)
                 .title(getResources().getString(R.string.logout_title))
@@ -235,7 +263,7 @@ public class MainActivity extends BaseActivity {
                 .onPositive(new MaterialDialog.SingleButtonCallback() {
                     @Override
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                        session.logoutUser();
+                        removeFBToken();
                     }
                 })
                 .show();
@@ -249,5 +277,11 @@ public class MainActivity extends BaseActivity {
             transaction.add(R.id.containerView, FRAGMENT_MAIN);
         }
         transaction.commit();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finishAffinity();
     }
 }

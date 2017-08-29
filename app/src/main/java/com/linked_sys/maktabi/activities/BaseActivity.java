@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
@@ -16,6 +17,8 @@ import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.android.volley.Request;
 import com.android.volley.error.VolleyError;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.linked_sys.maktabi.core.AppController;
 import com.linked_sys.maktabi.core.CacheHelper;
 import com.linked_sys.maktabi.core.SessionManager;
 import com.linked_sys.maktabi.core.SharedManager;
@@ -24,6 +27,9 @@ import com.linked_sys.maktabi.network.ApiEndPoints;
 import com.linked_sys.maktabi.network.ApiHelper;
 
 import org.json.JSONObject;
+
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public abstract class BaseActivity extends AppCompatActivity {
     SessionManager session;
@@ -123,5 +129,48 @@ public abstract class BaseActivity extends AppCompatActivity {
             }
         });
         api.executeRequest(false, false);
+    }
+
+    public void getID_SendToken() {
+        if (session.getUserToken() != null)
+            CacheHelper.getInstance().token = session.getUserToken();
+        ApiHelper api = new ApiHelper(this, ApiEndPoints.GET_USER_DATA, Request.Method.GET, new ApiCallback() {
+            @Override
+            public void onSuccess(Object response) {
+                JSONObject res = (JSONObject) response;
+                try {
+                    JSONObject dataObj = res.optJSONObject("UserData");
+                    sendFBToken(dataObj.optString("Id"));
+                }catch (Exception e){
+                    Log.d(AppController.TAG, e.getMessage());
+                }
+            }
+
+            @Override
+            public void onFailure(VolleyError error) {
+
+            }
+        });
+        api.executeRequest(false, false);
+    }
+
+    public void sendFBToken(String userID) {
+        final String token = FirebaseInstanceId.getInstance().getToken();
+        Map<String, String> map = new LinkedHashMap<>();
+        map.put("UserID", userID);
+        map.put("Token", token);
+
+        ApiHelper api = new ApiHelper(this, ApiEndPoints.SEND_FB_TOKEN, Request.Method.POST, map, new ApiCallback() {
+            @Override
+            public void onSuccess(Object response) {
+                Log.d(AppController.TAG, (String) response);
+            }
+
+            @Override
+            public void onFailure(VolleyError error) {
+                Log.d(AppController.TAG, error.getMessage());
+            }
+        });
+        api.executePostRequest(false);
     }
 }

@@ -69,6 +69,7 @@ public class ApiHelper {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> params = new HashMap<>();
+                params.put("Authorization", "bearer " + CacheHelper.getInstance().token);
                 return params;
             }
         };

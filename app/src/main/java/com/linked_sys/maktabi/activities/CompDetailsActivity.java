@@ -68,13 +68,17 @@ public class CompDetailsActivity extends BaseActivity {
             public void onClick(View v) {
                 new MaterialDialog.Builder(CompDetailsActivity.this)
                         .title("إضافة رد")
-                        .input(null, captainReply, new MaterialDialog.InputCallback() {
+                        .input(null, null, new MaterialDialog.InputCallback() {
                             @Override
                             public void onInput(MaterialDialog dialog, CharSequence input) {
                                 try {
                                     String reply = URLEncoder.encode(String.valueOf(input), "utf-8");
                                     //POST REPLY
-                                    postReply(reply);
+                                    if (reply.equals("")) {
+                                        Toast.makeText(CompDetailsActivity.this, "برجاء كتابة رد", Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        postReply(reply);
+                                    }
                                     captainReply = String.valueOf(input);
                                 } catch (UnsupportedEncodingException e) {
                                     e.printStackTrace();
@@ -97,10 +101,16 @@ public class CompDetailsActivity extends BaseActivity {
         ApiHelper api = new ApiHelper(this, url, Request.Method.GET, new ApiCallback() {
             @Override
             public void onSuccess(Object response) {
+                replyContainer.removeAllViews();
                 JSONObject res = (JSONObject) response;
                 JSONObject compObj = res.optJSONObject("complainDetail");
                 compTitleTXT.setText(compObj.optString("Title"));
                 compBodyTXT.setText(compObj.optString("Body"));
+                if (compObj.optBoolean("Solved")) {
+                    btnSendReply.setVisibility(View.GONE);
+                } else {
+                    btnSendReply.setVisibility(View.VISIBLE);
+                }
                 SimpleDateFormat spf = new SimpleDateFormat("yyyy-MM-dd");
                 Date newDate = null;
                 try {
@@ -115,6 +125,7 @@ public class CompDetailsActivity extends BaseActivity {
                     JSONArray repliesArray = res.optJSONArray("ResponsesList");
                     repliesList.clear();
                     if (repliesArray.length() > 0) {
+                        placeholder.setVisibility(View.GONE);
                         for (int i = 0; i < repliesArray.length(); i++) {
                             try {
                                 JSONObject jsonObject = repliesArray.getJSONObject(i);
@@ -195,6 +206,7 @@ public class CompDetailsActivity extends BaseActivity {
             @Override
             public void onSuccess(Object response) {
                 Toast.makeText(CompDetailsActivity.this, "تم إرسال الرد", Toast.LENGTH_SHORT).show();
+                getCompDetails();
             }
 
             @Override

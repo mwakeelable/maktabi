@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:clickable="true"
+    android:background="?attr/selectableItemBackground"
     android:focusable="true">
 
     <LinearLayout
@@ -12,6 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:gravity="start|center"
+        android:clickable="true"
         android:orientation="horizontal">
 
         <TextView

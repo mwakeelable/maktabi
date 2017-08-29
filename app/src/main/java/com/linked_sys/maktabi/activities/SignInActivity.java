@@ -138,6 +138,7 @@ public class SignInActivity extends BaseActivity {
                                     password,
                                     CacheHelper.getInstance().token);
                             Log.d(AppController.TAG, CacheHelper.getInstance().token);
+                            getID_SendToken();
                             getUserData();
                             mProgress.hide();
                         }

@@ -258,6 +258,7 @@ public class ComplaintsActivity extends BaseActivity implements ComplaintsAdapte
     @Override
     protected void onResume() {
         super.onResume();
-        mAdapter.notifyDataSetChanged();
+        getComplaints();
+//        mAdapter.notifyDataSetChanged();
     }
 }

@@ -59,6 +59,7 @@ public class ComposeComplaintActivity extends BaseActivity {
             @Override
             public void onSuccess(Object response) {
                 Log.d(AppController.TAG, response.toString());
+                onBackPressed();
             }
 
             @Override
@@ -69,4 +70,8 @@ public class ComposeComplaintActivity extends BaseActivity {
         api.executePostRequest(true);
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
 }
