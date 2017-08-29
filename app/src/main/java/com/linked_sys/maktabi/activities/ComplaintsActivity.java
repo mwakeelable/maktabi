@@ -56,7 +56,7 @@ public class ComplaintsActivity extends BaseActivity implements ComplaintsAdapte
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                openActivity(ComposeComplaintActivity.class);
             }
         });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

@@ -190,7 +190,6 @@ public class CompDetailsActivity extends BaseActivity {
         Map<String, String> map = new LinkedHashMap<>();
         map.put("ComplainID", String.valueOf(compID));
         map.put("Body", reply);
-        map.put("StatusID", String.valueOf(statusID));
         map.put("UserID", String.valueOf(CacheHelper.getInstance().userData.get(session.KEY_USER_ID)));
         ApiHelper api = new ApiHelper(this, ApiEndPoints.POST_REPLY, Request.Method.POST, map, new ApiCallback() {
             @Override

@@ -102,6 +102,15 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.linked_sys.maktabi.activities.ComplaintsActivity" />
         </activity>
+        <activity
+            android:name=".activities.ComposeComplaintActivity"
+            android:label="@string/title_activity_compose_complaint"
+            android:parentActivityName=".activities.ComplaintsActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.linked_sys.maktabi.activities.ComplaintsActivity" />
+        </activity>
     </application>
 
 </manifest>

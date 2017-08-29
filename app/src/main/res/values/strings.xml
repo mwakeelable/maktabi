@@ -148,4 +148,7 @@
     <string name="title_activity_balance">حســابي</string>
     <string name="title_activity_complaints">الشكاوى والطلبات</string>
     <string name="title_activity_comp_details">تفاصيل الشكوى</string>
+    <string name="txt_msg_subject">العنوان</string>
+    <string name="txt_msg_body">الموضوع</string>
+    <string name="title_activity_compose_complaint">إرسـال شـكوى</string>
 </resources>
