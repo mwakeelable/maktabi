@@ -59,6 +59,7 @@ public class ComposeComplaintActivity extends BaseActivity {
             @Override
             public void onSuccess(Object response) {
                 Log.d(AppController.TAG, response.toString());
+                getComplaintsCount(CacheHelper.getInstance().userData.get(session.KEY_USER_ID));
                 onBackPressed();
             }
 

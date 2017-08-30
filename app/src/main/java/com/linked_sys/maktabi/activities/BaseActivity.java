@@ -32,7 +32,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public abstract class BaseActivity extends AppCompatActivity {
-    SessionManager session;
+    public SessionManager session;
     SharedManager sharedManager;
     Bitmap userAvatar;
 
@@ -106,8 +106,8 @@ public abstract class BaseActivity extends AppCompatActivity {
                     CacheHelper.getInstance().captainData.put(session.KEY_IMAGE, captainDataObj.optString("Image"));
                     CacheHelper.getInstance().captainData.put("isCareem", String.valueOf(captainDataObj.optBoolean("Careem")));
                     CacheHelper.getInstance().captainData.put("isUber",String.valueOf(captainDataObj.optBoolean("Uber")));
-                    openActivity(MainActivity.class);
-                    finish();
+                    CacheHelper.getInstance().captainData.put("OfficeNotify", String.valueOf(res.optInt("unread")));
+                    getComplaintsCount(CacheHelper.getInstance().userData.get(session.KEY_USER_ID));
                 } catch (Exception e) {
 
                 }
@@ -172,5 +172,26 @@ public abstract class BaseActivity extends AppCompatActivity {
             }
         });
         api.executePostRequest(false);
+    }
+
+    public void getComplaintsCount(String userID){
+        String url = ApiEndPoints.GET_COMPLAINTS_COUNT
+                +"?UserID=" + userID;
+        ApiHelper api = new ApiHelper(this, url, Request.Method.GET, new ApiCallback() {
+            @Override
+            public void onSuccess(Object response) {
+                JSONObject res = (JSONObject) response;
+                CacheHelper.getInstance().captainData.put("compCount",String.valueOf(res.optInt("count")));
+                openActivity(MainActivity.class);
+                finish();
+            }
+
+            @Override
+            public void onFailure(VolleyError error) {
+
+            }
+        });
+        api.executeRequest(false, false);
+
     }
 }

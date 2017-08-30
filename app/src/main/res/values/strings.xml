@@ -151,4 +151,5 @@
     <string name="txt_msg_subject">العنوان</string>
     <string name="txt_msg_body">الموضوع</string>
     <string name="title_activity_compose_complaint">إرسـال شـكوى</string>
+    <string name="title_activity_faq">الأسئلة العامة</string>
 </resources>
