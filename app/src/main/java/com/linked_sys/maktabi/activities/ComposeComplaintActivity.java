@@ -16,6 +16,8 @@ import com.linked_sys.maktabi.network.ApiCallback;
 import com.linked_sys.maktabi.network.ApiEndPoints;
 import com.linked_sys.maktabi.network.ApiHelper;
 
+import org.json.JSONObject;
+
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -59,7 +61,7 @@ public class ComposeComplaintActivity extends BaseActivity {
             @Override
             public void onSuccess(Object response) {
                 Log.d(AppController.TAG, response.toString());
-                getComplaintsCount(CacheHelper.getInstance().userData.get(session.KEY_USER_ID));
+                getCompCount();
                 onBackPressed();
             }
 
@@ -74,5 +76,23 @@ public class ComposeComplaintActivity extends BaseActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+    }
+
+    private void getCompCount(){
+        String url = ApiEndPoints.GET_COMPLAINTS_COUNT
+                +"?UserID=" + CacheHelper.getInstance().userData.get(session.KEY_USER_ID);
+        ApiHelper api = new ApiHelper(this, url, Request.Method.GET, new ApiCallback() {
+            @Override
+            public void onSuccess(Object response) {
+                JSONObject res = (JSONObject) response;
+                CacheHelper.captainComplaints = res.optInt("count");
+            }
+
+            @Override
+            public void onFailure(VolleyError error) {
+
+            }
+        });
+        api.executeRequest(false, false);
     }
 }
