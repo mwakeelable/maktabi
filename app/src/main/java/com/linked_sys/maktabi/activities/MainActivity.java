@@ -165,16 +165,16 @@ public class MainActivity extends BaseActivity {
                     }
                 })
         );
-        drawer.addItem(new DrawerItem()
-                .setTextPrimary(getString(R.string.generalInquery))
-                .setOnItemClickListener(new DrawerItem.OnItemClickListener() {
-                    @Override
-                    public void onClick(DrawerItem drawerItem, long l, int i) {
-                        mDrawerLayout.closeDrawer(GravityCompat.START);
-                        openActivity(SettingsActivity.class);
-                    }
-                })
-        );
+//        drawer.addItem(new DrawerItem()
+//                .setTextPrimary(getString(R.string.generalInquery))
+//                .setOnItemClickListener(new DrawerItem.OnItemClickListener() {
+//                    @Override
+//                    public void onClick(DrawerItem drawerItem, long l, int i) {
+//                        mDrawerLayout.closeDrawer(GravityCompat.START);
+//                        openActivity(SettingsActivity.class);
+//                    }
+//                })
+//        );
         drawer.addDivider();
 
         drawer.addItem(new DrawerItem()

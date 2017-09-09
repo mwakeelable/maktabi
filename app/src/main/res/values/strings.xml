@@ -10,8 +10,8 @@
     <string name="locationTo">Localização Enviada</string>
     <string name="title_activity_settings">Settings</string>
     <!--Login Screen-->
-    <string name="txt_email">البريد الالكتروني</string>
-    <string name="txt_password">كلمة المرور</string>
+    <string name="txt_email">رقم الموبايل</string>
+    <string name="txt_password">كلمة السر</string>
     <string name="action_sign_in">تسجيل الدخول</string>
     <string name="action_forget_password">نسيت كلمة المرور</string>
     <string name="txt_lang">اللغة</string>

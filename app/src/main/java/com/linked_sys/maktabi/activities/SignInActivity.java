@@ -77,7 +77,7 @@ public class SignInActivity extends BaseActivity {
                 password = txt_password.getText().toString().trim();
                 grant_type = "password";
                 String emailPattern = "([a-zA-Z0-9_-]+\\.)*[a-zA-Z0-9_-]+@[a-z]+(\\.[a-z]+)+";
-                if (!username.matches(emailPattern)) {
+                if (username.equalsIgnoreCase("")) {
                     awesomeValidation.validate();
                     return;
                 }

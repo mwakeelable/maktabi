@@ -2,7 +2,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center_horizontal"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@drawable/background_grey">
 
     <RelativeLayout
         android:id="@+id/login_container"
@@ -15,7 +16,7 @@
             android:id="@+id/logo_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="20dp"
             android:gravity="center"
             android:orientation="vertical"
             android:paddingBottom="@dimen/activity_vertical_margin"
@@ -27,7 +28,7 @@
                 android:id="@+id/img_logo"
                 android:layout_width="150dp"
                 android:layout_height="150dp"
-                android:src="@drawable/maktaby_logo"/>
+                android:src="@drawable/maktaby_logo" />
         </LinearLayout>
 
         <!--Login-->
@@ -36,12 +37,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/logo_container"
-            android:layout_marginTop="35dp"
+            android:layout_marginLeft="35dp"
+            android:layout_marginRight="35dp"
+            android:layout_marginEnd="35dp"
+            android:layout_marginStart="35dp"
+            android:layout_marginTop="20dp"
             android:orientation="vertical"
-            android:paddingBottom="@dimen/activity_vertical_margin"
-            android:paddingLeft="@dimen/activity_horizontal_margin"
-            android:paddingRight="@dimen/activity_horizontal_margin"
-            android:paddingTop="@dimen/activity_vertical_margin"
             android:weightSum="1">
 
             <!--Email-->
@@ -53,8 +54,9 @@
                     android:id="@+id/txt_email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/holder_search"
                     android:hint="@string/txt_email"
-                    android:inputType="textEmailAddress"
+                    android:inputType="phone"
                     android:maxLines="1"
                     android:padding="8dp"
                     android:textColorHint="@color/grey_0" />
@@ -70,6 +72,7 @@
                     android:id="@+id/txt_password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/holder_search"
                     android:hint="@string/txt_password"
                     android:imeOptions="actionDone"
                     android:inputType="textPassword"
@@ -84,11 +87,11 @@
                 style="?android:textAppearanceSmall"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
+                android:layout_marginTop="10dp"
                 android:background="@drawable/login_btn"
                 android:text="@string/action_sign_in"
                 android:textColor="@color/grey_0"
-                android:visibility="gone" />
+                android:visibility="visible" />
         </LinearLayout>
 
         <LinearLayout
@@ -97,7 +100,8 @@
             android:layout_height="50dp"
             android:layout_alignParentBottom="true"
             android:background="@color/colorPrimary"
-            android:gravity="center">
+            android:gravity="center"
+            android:visibility="gone">
 
             <TextView
                 android:layout_width="wrap_content"
