@@ -185,8 +185,8 @@ public class ComplaintsActivity extends BaseActivity implements ComplaintsAdapte
     }
 
     private void loadMoreComplaints() {
-        String balanceUrl = ApiEndPoints.GET_CAPTAIN_BALANCE
-                + "?CaptainID=" + CacheHelper.getInstance().captainData.get(session.KEY_CAPTAIN_ID)
+        String balanceUrl = ApiEndPoints.GET_CAPTAIN_COMPLAINTS
+                + "?UserID=" + CacheHelper.getInstance().userData.get(session.KEY_USER_ID)
                 + "&Skip=" + skip
                 + "&length=" + limit;
         ApiHelper api = new ApiHelper(this, balanceUrl, Request.Method.GET, new ApiCallback() {
@@ -253,7 +253,6 @@ public class ComplaintsActivity extends BaseActivity implements ComplaintsAdapte
     @Override
     protected void onResume() {
         super.onResume();
-        getComplaints();
-//        mAdapter.notifyDataSetChanged();
+        mAdapter.notifyDataSetChanged();
     }
 }

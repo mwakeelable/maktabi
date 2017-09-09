@@ -59,9 +59,7 @@
             android:layout_marginLeft="5dp"
             android:layout_marginStart="5dp"
             android:textColor="#6A6A6A"
-            android:textSize="18sp"
-            android:ellipsize="end"
-            android:maxLines="1"/>
+            android:textSize="18sp" />
 
     </LinearLayout>
 
