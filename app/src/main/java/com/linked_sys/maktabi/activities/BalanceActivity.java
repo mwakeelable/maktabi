@@ -187,12 +187,10 @@ public class BalanceActivity extends BaseActivity implements BalanceAdapter.Bala
         ApiHelper api = new ApiHelper(this, balanceUrl, Request.Method.GET, new ApiCallback() {
             @Override
             public void onSuccess(Object response) {
-                balanceList.clear();
                 JSONObject obj = (JSONObject) response;
                 try {
                     JSONArray balanceArray = obj.optJSONArray("BalancesList");
                     if (balanceArray.length() > 0) {
-                        placeholder.setVisibility(View.GONE);
                         for (int i = 0; i < balanceArray.length(); i++) {
                             JSONObject balanceObj = balanceArray.optJSONObject(i);
                             CaptainBalance captainBalance = new CaptainBalance();
@@ -209,9 +207,6 @@ public class BalanceActivity extends BaseActivity implements BalanceAdapter.Bala
                             loadMore = false;
                         else
                             loadMore = true;
-                    } else {
-                        placeholder.setVisibility(View.VISIBLE);
-                        swipeRefreshLayout.setRefreshing(false);
                     }
                 } catch (Exception e) {
                     Log.d(AppController.TAG, e.getMessage());

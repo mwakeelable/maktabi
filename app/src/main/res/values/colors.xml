@@ -44,4 +44,6 @@
     <color name="icon_tint_selected">#fed776</color>
     <color name="row_activated">#e0e0e0</color>
     <color name="grey_800">#424242</color>
+    <color name="coral_blue">#1DAEFA</color>
+    <color name="dark_blue">#125D9D</color>
 </resources>

@@ -244,6 +244,7 @@ public class MainActivity extends BaseActivity {
         ApiHelper api = new ApiHelper(this, ApiEndPoints.REMOVE_FB_TOKEN, Request.Method.POST, map, new ApiCallback() {
             @Override
             public void onSuccess(Object response) {
+                CacheHelper.captainBalance = 0;
                 session.logoutUser();
             }
 

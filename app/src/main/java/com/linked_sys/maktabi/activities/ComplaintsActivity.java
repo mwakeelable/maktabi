@@ -192,12 +192,10 @@ public class ComplaintsActivity extends BaseActivity implements ComplaintsAdapte
         ApiHelper api = new ApiHelper(this, balanceUrl, Request.Method.GET, new ApiCallback() {
             @Override
             public void onSuccess(Object response) {
-                complaintList.clear();
                 JSONObject obj = (JSONObject) response;
                 try {
                     JSONArray compArray = obj.optJSONArray("ComplainsList");
                     if (compArray.length() > 0) {
-                        placeholder.setVisibility(View.GONE);
                         for (int i = 0; i < compArray.length(); i++) {
                             JSONObject compObj = compArray.optJSONObject(i);
                             Complaint complaint = new Complaint();
@@ -214,9 +212,6 @@ public class ComplaintsActivity extends BaseActivity implements ComplaintsAdapte
                             loadMore = false;
                         else
                             loadMore = true;
-                    } else {
-                        placeholder.setVisibility(View.VISIBLE);
-                        swipeRefreshLayout.setRefreshing(false);
                     }
                 } catch (Exception e) {
                     Log.d(AppController.TAG, e.getMessage());

@@ -102,7 +102,9 @@ public abstract class BaseActivity extends AppCompatActivity {
                     CacheHelper.getInstance().captainData.put(session.KEY_NID, captainDataObj.optString("NID"));
                     CacheHelper.getInstance().captainData.put(session.KEY_CARD_NO, captainDataObj.optString("CardNo"));
                     CacheHelper.getInstance().captainData.put(session.KEY_CAREEM_ID, String.valueOf(captainDataObj.optInt("CareemID")));
-                    CacheHelper.getInstance().captainData.put(session.KEY_BALANCE_TOTAL, String.valueOf(res.opt("TotalBalance")));
+                    CacheHelper.getInstance().captainData.put(session.KEY_BALANCE_TOTAL, String.valueOf(res.optInt("TotalBalance")));
+                    CacheHelper.captainBalance = res.optInt("TotalBalance");
+                    CacheHelper.captainComplaints = res.optInt("complaincount");
                     CacheHelper.getInstance().captainData.put(session.KEY_IMAGE, captainDataObj.optString("Image"));
                     CacheHelper.getInstance().captainData.put("isCareem", String.valueOf(captainDataObj.optBoolean("Careem")));
                     CacheHelper.getInstance().captainData.put("isUber",String.valueOf(captainDataObj.optBoolean("Uber")));
@@ -193,5 +195,23 @@ public abstract class BaseActivity extends AppCompatActivity {
         });
         api.executeRequest(false, false);
 
+    }
+
+    public void getCaptainBalance(){
+        String url = ApiEndPoints.GET_BALANCE_COUNT
+                + "?CaptainID=" + String.valueOf(CacheHelper.getInstance().userData.get(session.KEY_USER_ID));
+        ApiHelper api = new ApiHelper(this, url, Request.Method.GET, new ApiCallback() {
+            @Override
+            public void onSuccess(Object response) {
+                JSONObject res = (JSONObject) response;
+                CacheHelper.captainBalance = res.optInt("count");
+            }
+
+            @Override
+            public void onFailure(VolleyError error) {
+                Log.d(AppController.TAG, "Failed");
+            }
+        });
+        api.executeRequest(false, false);
     }
 }

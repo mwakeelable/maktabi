@@ -23,4 +23,7 @@ public class CacheHelper {
     //UserData
     public HashMap<String, String> userData = new HashMap<>();
     public HashMap<String, String> captainData = new HashMap<>();
+
+    public static int captainBalance;
+    public static int captainComplaints;
 }
