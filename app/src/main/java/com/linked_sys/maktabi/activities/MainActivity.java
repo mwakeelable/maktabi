@@ -17,6 +17,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -153,6 +154,7 @@ public class MainActivity extends BaseActivity {
                     @Override
                     public void onClick(DrawerItem drawerItem, long l, int i) {
                         mDrawerLayout.closeDrawer(GravityCompat.START);
+                        Toast.makeText(MainActivity.this, "تحت التطوير", Toast.LENGTH_SHORT).show();
                     }
                 })
         );
@@ -162,6 +164,7 @@ public class MainActivity extends BaseActivity {
                     @Override
                     public void onClick(DrawerItem drawerItem, long l, int i) {
                         mDrawerLayout.closeDrawer(GravityCompat.START);
+                        Toast.makeText(MainActivity.this, "تحت التطوير", Toast.LENGTH_SHORT).show();
                     }
                 })
         );

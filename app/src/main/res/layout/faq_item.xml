@@ -3,10 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#6B6B76"/>
 
     <TextView
         android:id="@+id/answerTxt"
@@ -18,9 +14,8 @@
         android:paddingEnd="10dp"
         android:paddingStart="10dp"
         android:paddingTop="10dp"
-        android:text="faq body"
         android:textAlignment="viewStart"
-        android:textColor="#6B6B76"
+        android:textColor="#B9B9B9"
         android:textSize="14sp"
         android:visibility="visible" />
 
